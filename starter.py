@@ -47,7 +47,9 @@ def build_grayscale(flat_pixels, height, width):
     # TODO A：将序列转换为数组，并重塑其形状。
     # 请删除下面的 raise NotImplementedError(...)，并在此处编写你的实现。
     # 请使用 return 返回函数要求的结果。
-    raise NotImplementedError("任务 A：请完成 build_grayscale()。")
+    arr = np.array(flat_pixels, dtype=np.uint8)
+    arr = arr.reshape(height, width)
+    return arr
 
 
 def edit_pixel(gray, row, col, value):
@@ -77,7 +79,9 @@ def edit_pixel(gray, row, col, value):
     # TODO B：先复制数组，再通过二维索引修改指定像素的值。
     # 请删除下面的 raise NotImplementedError(...)，并在此处编写你的实现。
     # 请使用 return 返回函数要求的结果。
-    raise NotImplementedError("任务 B：请完成 edit_pixel()。")
+    new_gray = gray.copy()
+    new_gray[row, col] = value
+    return new_gray
 
 
 def grayscale_to_rgb(gray):
@@ -108,7 +112,8 @@ def grayscale_to_rgb(gray):
     # TODO C：将三份灰度值沿最后一个轴组合，构建三个颜色通道。
     # 请删除下面的 raise NotImplementedError(...)，并在此处编写你的实现。
     # 请使用 return 返回函数要求的结果。
-    raise NotImplementedError("任务 C：请完成 grayscale_to_rgb()。")
+    rgb = np.repeat(gray[..., np.newaxis], 3, axis=-1)
+    return rgb
 
 
 def adjust_brightness(image, offset):
@@ -131,7 +136,10 @@ def adjust_brightness(image, offset):
     # TODO D：先转换为有符号整数，再相加；限制数值范围后转换回原类型。
     # 请删除下面的 raise NotImplementedError(...)，并在此处编写你的实现。
     # 请使用 return 返回函数要求的结果。
-    raise NotImplementedError("任务 D：请完成 adjust_brightness()。")
+    temp = image.astype(np.int16) + offset
+    temp = np.clip(temp, 0, 255)
+    new_image = temp.astype(np.uint8)
+    return new_image
 
 
 def check_functions():
